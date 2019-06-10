@@ -1,79 +1,76 @@
 $(document).ready(function () {
 
-	var Random;
+	
 	var totalScore = 0;
 	var wins = 0;
 	var losses = 0;
-	var redNumber;
-	var blueNumber;
-	var greenNumber;
-	var purpleNumber;
+	var Random = Math.floor(Math.random() * 120) + 19;
+	var redNumber = Math.floor(Math.random() * 12);
+	var blueNumber = Math.floor(Math.random() * 12);
+	var greenNumber = Math.floor(Math.random() * 12);
+	var purpleNumber = Math.floor(Math.random() * 12);
 
-	function newValues(){
-		var Random = Math.floor(Math.random() * 120) + 19;
-		var redNumber = Math.floor(Math.random() * 12);
-		var blueNumber = Math.floor(Math.random() * 12);
-		var greenNumber = Math.floor(Math.random() * 12);
-		var purpleNumber = Math.floor(Math.random() * 12);
 
-		console.log(newValues());
+		function shuffleValues() {
+		 redNumber = Math.floor(Math.random() * 12);
+		 blueNumber = Math.floor(Math.random() * 12);
+		 greenNumber = Math.floor(Math.random() * 12);
+		 purpleNumber = Math.floor(Math.random() * 12);
 
-	}
+		}
 
-	function newGame(){
-		newValues();
-		totalScore = 0;
+
+		function newGame(){
+		if(totalScore === Random){
+			wins++;
+			$('#correctGuess').text(wins);
+			Random = Math.floor(Math.random() * 120) + 19;
+			$("#targetNumb").text(Random);
+			totalScore = 0;
+			$("#totalScore").text(totalScore);
+			shuffleValues();
+		} else if(totalScore > Random){
+			losses++;
+			$("#incorrectGuess").text(losses);
+			Random = Math.floor(Math.random() * 120) + 19;
+			$("#targetNumb").text(Random);
+			totalScore = 0;
+			$("#totalScore").text(totalScore);
+			shuffleValues();
+
+		}}
+
 		$("#targetNumb").text(Random);
-		$("#totalScore").text(totalScore);
-		$("#redButton").attr('.crystalButton', redNumber);
-		$("#blueButton").attr('.crystalButton', blueNumber);
-		$("#greenButton").attr('.crystalButton', greenNumber);
-		$("#purpleButton").attr('.crystalButton', purpleNumber);
-		$("#wins").text(wins);
-		$("#losses").text(losses);
 
-		console.log(newGame());
-	}
 	
-	function winner() {
-		wins++;
-		$("#wins").text(wins);
-		reset();
+	
+		$('#redButton').on('click', function(){
+			totalScore += redNumber;
+			$("#totalScore").text(totalScore);
+			newGame();
+		});
 
-		console.log(winner());
-	}
+		$('#blueButton').on('click', function(){
+			totalScore += blueNumber;
+			$("#totalScore").text(totalScore);
+			newGame();
+		});
 
-	function loser() {
-		losses++;
-		$("#losses").text(losses);
-		reset();
+		$('#greenButton').on('click', function(){
+			totalScore += greenNumber;
+			$("#totalScore").text(totalScore);
+			newGame();
+		});
 
-		console.log(loser());
-	}
+		$('#purpleButton').on('click', function(){
+			totalScore += purpleNumber;
+			$("#totalScore").text(totalScore);
+			newGame();
+		});
+		
 
-	function reset() {
-		newGame();
-	}
-
-	$(".crystalButton").click(function () {
-		if (totalScore >= Random) {
-			return;
-		}
-
-		var crystalValue = $(this).attr(".crystalButton");
-		crystalValue = parseInt(crystalValue);
-		totalScore += crystalValue;
-		$("#totalScore").text(totalScore);
-
-		if (totalScore === Random) {
-			winner();
-		} else if (totalScore > Random) {
-			loser();
-		}
-
-		console.log(crystalValue);
+	
 	
 	});
-});
 
 			
